@@ -73,6 +73,21 @@ elif [ "$count" -gt 1 ]; then
    uci set network.lan.ipaddr='192.168.2.1'
    uci set network.lan.netmask='255.255.255.0'
    echo "set 192.168.2.1 at $(date)" >> $LOGFILE
+
+   # 设置静态IP-MAC绑定
+   uci add dhcp host
+   uci set dhcp.@host[-1].name='TP-CD'
+   uci set dhcp.@host[-1].mac='48:5F:08:A1:2E:5F'
+   uci set dhcp.@host[-1].ip='192.168.2.2'
+   uci add dhcp host
+   uci set dhcp.@host[-1].name='NAS'
+   uci set dhcp.@host[-1].mac='6C:BF:B5:01:FD:B7'
+   uci set dhcp.@host[-1].ip='192.168.2.99'
+   uci add dhcp host
+   uci set dhcp.@host[-1].name='iRearder'
+   uci set dhcp.@host[-1].mac='20:0A:0D:56:A6:EE'
+   uci set dhcp.@host[-1].ip='192.168.2.88'
+   
    # 判断是否启用 PPPoE
    echo "print enable_pppoe value=== $enable_pppoe" >> $LOGFILE
    if [ "$enable_pppoe" = "yes" ]; then
